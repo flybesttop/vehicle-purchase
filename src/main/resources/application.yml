@@ -3,9 +3,9 @@ spring:
         name: vehicle_purchase
     datasource:
         driver-class-name: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://localhost:3306/vehicle_purchase?charset=utf8mb4&useSSL=false&serverTimezone=GMT%2B8
+        url: jdbc:mysql://localhost:3306/vehicle_purchase?useUnicode=true&characterEncoding=UTF-8
         username: root
-        password: 123456
+        password: m19990215
     aop:
         auto: true
 
