@@ -29,4 +29,9 @@ public class UserController {
     public User LoginUser(HttpServletRequest request,@RequestBody User user){
         return userService.LoginUser(user);
     }
+
+    @RequestMapping(value = "/updateUser",method = POST)
+    public boolean updateUser(HttpServletRequest request,@RequestBody User user){
+        return userService.updateUser(user);
+    }
 }

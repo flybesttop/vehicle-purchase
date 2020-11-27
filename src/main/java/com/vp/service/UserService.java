@@ -10,4 +10,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserService {
     User LoginUser(User user);
+    boolean updateUser(User user);
 }
