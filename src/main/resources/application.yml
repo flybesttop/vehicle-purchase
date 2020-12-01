@@ -5,7 +5,7 @@ spring:
         driver-class-name: com.mysql.cj.jdbc.Driver
         url: jdbc:mysql://localhost:3306/vehicle_purchase?useUnicode=true&characterEncoding=UTF-8
         username: root
-        password: m19990215
+        password: 123456
     aop:
         auto: true
 
@@ -22,3 +22,7 @@ pagehelper:
     supportMethodsArguments: true
     params: count=countSql
     default-count: false
+
+file:
+    staticAccessPath: /files/**
+    uploadFolder: E://FILE_SERVER/
