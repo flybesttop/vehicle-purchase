@@ -17,8 +17,8 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public boolean createCompany(Company company) {
-        int result=companyMapper.insert(company);
-        return result!=0;
+        int result = companyMapper.insert(company);
+        return result != 0;
     }
 }
 

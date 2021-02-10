@@ -18,8 +18,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User LoginUser(User user) {
-        User checkUser=userMapper.selectByPrimaryKey(user.getOpenId());
-        if (CommonUtils.isEmpty(checkUser)){
+        User checkUser = userMapper.selectByPrimaryKey(user.getOpenId());
+        if (CommonUtils.isEmpty(checkUser)) {
             userMapper.insert(user);
             return user;
         } else {
@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean updateUser(User user) {
-        int result=userMapper.updateByPrimaryKeySelective(user);
-        return result!=0;
+        int result = userMapper.updateByPrimaryKeySelective(user);
+        return result != 0;
     }
 }

@@ -4,18 +4,21 @@
   <resultMap id="BaseResultMap" type="com.vp.entity.Company" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="company_name" property="companyName" jdbcType="VARCHAR" />
-    <result column="avatarUrl" property="avatarurl" jdbcType="VARCHAR" />
-    <result column="phonenum" property="phonenum" jdbcType="VARCHAR" />
+    <result column="avatar_url" property="avatarUrl" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="province" property="province" jdbcType="VARCHAR" />
     <result column="city" property="city" jdbcType="VARCHAR" />
     <result column="area" property="area" jdbcType="VARCHAR" />
     <result column="post_code" property="postCode" jdbcType="VARCHAR" />
     <result column="introduction" property="introduction" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
-    <result column="update_time" property="updateTime" jdbcType="VARCHAR" />
+    <result column="creator_id" property="creatorId" jdbcType="INTEGER" />
+    <result column="creator_phone" property="creatorPhone" jdbcType="VARCHAR" />
+    <result column="creator_name" property="creatorName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, company_name, avatarUrl, phonenum, province, city, area, post_code, introduction, 
+    id, company_name, avatar_url, phone, province, city, area, post_code, introduction, creator_id, creator_phone, creator_name
     create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -30,13 +33,12 @@
   </delete>
   <insert id="insert" parameterType="com.vp.entity.Company" >
     insert into company (id, company_name, avatarUrl, 
-      phonenum, province, city, 
-      area, post_code, introduction, 
-      create_time, update_time)
-    values (#{id,jdbcType=INTEGER}, #{companyName,jdbcType=VARCHAR}, #{avatarurl,jdbcType=VARCHAR}, 
-      #{phonenum,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
-      #{area,jdbcType=VARCHAR}, #{postCode,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR}, 
-      now(), now())
+      phone, province, city,
+      area, post_code, introduction, creator_id, creator_phone, creator_name)
+    values (#{id,jdbcType=INTEGER}, #{companyName,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR},
+      #{phone,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR},
+      #{area,jdbcType=VARCHAR}, #{postCode,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR},
+      #{creatorId,jdbcType=INTEGER}, #{creatorPhone,jdbcType=VARCHAR}, #{creatorName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.vp.entity.Company" >
     insert into company
@@ -47,11 +49,11 @@
       <if test="companyName != null" >
         company_name,
       </if>
-      <if test="avatarurl != null" >
-        avatarUrl,
+      <if test="avatarUrl != null" >
+        avatar_url,
       </if>
-      <if test="phonenum != null" >
-        phonenum,
+      <if test="phone != null" >
+        phone,
       </if>
       <if test="province != null" >
         province,
@@ -66,13 +68,16 @@
         post_code,
       </if>
       <if test="introduction != null" >
-        introduction,
+        introduction
       </if>
-      <if test="createTime != null" >
-        create_time,
+      <if test="creatorId != null" >
+        creator_id
       </if>
-      <if test="updateTime != null" >
-        update_time,
+      <if test="creatorPhone != null" >
+        creator_phone
+      </if>
+      <if test="creatorName != null" >
+        creator_name
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -82,10 +87,10 @@
       <if test="companyName != null" >
         #{companyName,jdbcType=VARCHAR},
       </if>
-      <if test="avatarurl != null" >
-        #{avatarurl,jdbcType=VARCHAR},
+      <if test="avatarUrl != null" >
+        #{avatar_url,jdbcType=VARCHAR},
       </if>
-      <if test="phonenum != null" >
+      <if test="phone != null" >
         #{phonenum,jdbcType=VARCHAR},
       </if>
       <if test="province != null" >
@@ -103,11 +108,14 @@
       <if test="introduction != null" >
         #{introduction,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=VARCHAR},
+      <if test="creatorId != null" >
+        #{creator_id,jdbcType=INTEGER},
       </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=VARCHAR},
+      <if test="creatorPhone != null" >
+        #{creator_phone,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorName != null" >
+        #{creator_name,jdbcType=VARCHAR}
       </if>
     </trim>
   </insert>
@@ -117,11 +125,11 @@
       <if test="companyName != null" >
         company_name = #{companyName,jdbcType=VARCHAR},
       </if>
-      <if test="avatarurl != null" >
-        avatarUrl = #{avatarurl,jdbcType=VARCHAR},
+      <if test="avatarUrl != null" >
+        avatar_url = #{avatarUrl,jdbcType=VARCHAR},
       </if>
-      <if test="phonenum != null" >
-        phonenum = #{phonenum,jdbcType=VARCHAR},
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
       </if>
       <if test="province != null" >
         province = #{province,jdbcType=VARCHAR},
@@ -138,11 +146,14 @@
       <if test="introduction != null" >
         introduction = #{introduction,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=VARCHAR},
+      <if test="creatorId != null" >
+        creator_id = #{creatorId,jdbcType=INTEGER},
       </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=VARCHAR},
+      <if test="creatorPhone != null" >
+        creator_phone = #{creatorPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorName != null" >
+        creator_name = #{creatorName,jdbcType=VARCHAR}
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -150,15 +161,16 @@
   <update id="updateByPrimaryKey" parameterType="com.vp.entity.Company" >
     update company
     set company_name = #{companyName,jdbcType=VARCHAR},
-      avatarUrl = #{avatarurl,jdbcType=VARCHAR},
-      phonenum = #{phonenum,jdbcType=VARCHAR},
+      avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
       province = #{province,jdbcType=VARCHAR},
       city = #{city,jdbcType=VARCHAR},
       area = #{area,jdbcType=VARCHAR},
       post_code = #{postCode,jdbcType=VARCHAR},
       introduction = #{introduction,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=VARCHAR},
-      update_time = #{updateTime,jdbcType=VARCHAR}
+      creator_id = #{creatorId,jdbcType=INTEGER},
+      creator_phone = #{creatorPhone,jdbcType=VARCHAR},
+      creator_name = #{creatorName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

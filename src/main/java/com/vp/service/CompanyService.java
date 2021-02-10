@@ -9,5 +9,10 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface CompanyService {
+    /**
+     * 创建企业，组织
+     * @param company
+     * @return
+     */
     boolean createCompany(Company company);
 }

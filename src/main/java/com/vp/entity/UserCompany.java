@@ -6,23 +6,23 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 客户model
+ * 用户_企业组织关联
  * @author flybesttop
  * @date 2021-02-08
  */
 @Data
-public class User implements Serializable {
+public class UserCompany implements Serializable {
+    private Integer id;
+
+    private Integer companyId;
+
     private String openId;
 
-    private String avatarUrl;
+    private Byte isDefault;
 
-    private String username;
+    private Integer roleId;
 
-    private String phone;
-
-    private String nickname;
-
-    private Integer gender;
+    private String roleName;
 
     private LocalDateTime createTime;
 

@@ -51,39 +51,6 @@ public class RequestLogAop {
         }
         Map<String, String[]> params = request.getParameterMap();
         log.debug("请求参数：{}", params);
-//        RequestLogDTO logDTO = new RequestLogDTO();
-//        String clientIp = request.getHeader("X-Forwarded-For");
-//        logDTO.setClientIp(clientIp);
-//        logDTO.setClientName("门店后台");
-//        logDTO.setClientType("SELLER");
-//        logDTO.setHttpUrl(path);
-//        logDTO.setHttpMethod(method);
-//        if (StringUtils.equals("POST", method)) {
-//            logDTO.setHttpBody(params);
-//        } else {
-//            logDTO.setHttpParam(params);
-//        }
-//        logDTO.setHttpHeader(requestHeaders);
-//        String id = (String) request.getSession().getAttribute("id");
-//        if (StringUtils.isNotBlank(id)) {
-//            logDTO.setOrgId(Long.valueOf(id));
-//        }
-//        MyJdbcRealm.ShiroUser user = (MyJdbcRealm.ShiroUser) SecurityUtils.getSubject().getPrincipal();
-//        if (user != null) {
-//            logDTO.setUsername(user.getLoginName());
-//            Map sellerUser = userMapper.getSellerUserMapByUsername(user.getLoginName());
-//            Integer userId = (Integer) sellerUser.get("id");
-//            logDTO.setUserId(Long.valueOf(userId.toString()));
-//        }
-//
-//
-//        logDTO.setReqTime(LocalDateTime.now().toString());
-
-//        try {
-//            mqSender.sendRequestLog(logDTO);
-//        } catch (Exception e) {
-//            log.error("发送mq异常：{}", e.getMessage(), e);
-//        }
 
         log.debug("=====================RequestLogAop end=====================");
         return null;

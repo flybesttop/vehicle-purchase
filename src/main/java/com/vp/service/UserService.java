@@ -9,6 +9,18 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface UserService {
+
+    /**
+     * 用户登录
+     * @param user
+     * @return
+     */
     User LoginUser(User user);
+
+    /**
+     * 更新用户信息
+     * @param user
+     * @return
+     */
     boolean updateUser(User user);
 }
