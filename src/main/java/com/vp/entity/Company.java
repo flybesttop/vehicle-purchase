@@ -18,7 +18,7 @@ public class Company implements Serializable {
 
     private String avatarUrl;
 
-    private String phone;
+    private String companyPhone;
 
     private String province;
 
@@ -30,11 +30,13 @@ public class Company implements Serializable {
 
     private String introduction;
 
-    private Integer creatorId;
+    private String creatorOpenId;
 
     private String creatorPhone;
 
     private String creatorName;
+
+    private Integer status;
 
     private LocalDateTime createTime;
 

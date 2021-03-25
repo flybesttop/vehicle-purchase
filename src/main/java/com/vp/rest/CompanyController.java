@@ -2,13 +2,12 @@ package com.vp.rest;
 
 import com.vp.entity.Company;
 import com.vp.service.CompanyService;
+import com.vp.util.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
 
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
@@ -24,7 +23,7 @@ public class CompanyController {
     public CompanyService companyService;
 
     @RequestMapping(value = "createCompany", method = POST)
-    public boolean createCompany(@RequestBody Company company) {
-        return companyService.createCompany(company);
+    public BaseResponse<Boolean> createCompany(@RequestBody Company company) {
+        return new BaseResponse<>(companyService.createCompany(company));
     }
 }

@@ -17,6 +17,11 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public boolean createCompany(Company company) {
+        int sameNameCompany = companyMapper.selectSameNameCompany(company);
+        if (sameNameCompany > 0){
+            //当前客户已创建同名的公司了
+            return false;
+        }
         int result = companyMapper.insert(company);
         return result != 0;
     }

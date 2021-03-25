@@ -25,4 +25,4 @@ pagehelper:
 
 file:
     staticAccessPath: /files/**
-    uploadFolder: E://FILE_SERVER/
+    uploadFolder: D://FILE_SERVER/
