@@ -1,6 +1,7 @@
 package com.vp.service;
 
 import com.vp.entity.User;
+import com.vp.vo.UserVo;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,7 +16,7 @@ public interface UserService {
      * @param user
      * @return
      */
-    User LoginUser(User user);
+    UserVo LoginUser(User user);
 
     /**
      * 更新用户信息

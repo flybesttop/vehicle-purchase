@@ -2,6 +2,8 @@ package com.vp.rest;
 
 import com.vp.entity.User;
 import com.vp.service.UserService;
+import com.vp.util.BaseResponse;
+import com.vp.vo.UserVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,12 +25,14 @@ public class UserController {
     public UserService userService;
 
     @RequestMapping(value = "/loginUser", method = POST)
-    public User LoginUser(@RequestBody User user) {
-        return userService.LoginUser(user);
+    public BaseResponse<UserVo> LoginUser(@RequestBody User user) {
+        UserVo data = userService.LoginUser(user);
+        return new BaseResponse<>(data);
     }
 
     @RequestMapping(value = "/updateUser", method = POST)
-    public boolean updateUser(@RequestBody User user) {
-        return userService.updateUser(user);
+    public BaseResponse<Boolean> updateUser(@RequestBody User user) {
+        boolean data = userService.updateUser(user);
+        return new BaseResponse<>(data);
     }
 }

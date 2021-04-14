@@ -18,7 +18,7 @@ public class UserCompany implements Serializable {
 
     private String openId;
 
-    private Byte isDefault;
+    private Integer isDefault;
 
     private Integer roleId;
 

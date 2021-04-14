@@ -5,7 +5,7 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="company_id" property="companyId" jdbcType="INTEGER" />
     <result column="open_id" property="openId" jdbcType="VARCHAR" />
-    <result column="is_default" property="isDefault" jdbcType="TINYINT" />
+    <result column="is_default" property="isDefault" jdbcType="INTEGER" />
     <result column="role_id" property="roleId" jdbcType="INTEGER" />
     <result column="role_name" property="roleName" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
@@ -20,6 +20,18 @@
     from user_company
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="getUserDefaultCompany" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select
+        id
+    from user_company
+    where open_id=#{openId} and is_default=1
+  </select>
+  <select id="selectUserDefaultCompany" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from user_company
+    where open_id=#{openId} and is_default=1
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from user_company
     where id = #{id,jdbcType=INTEGER}
@@ -29,8 +41,7 @@
       is_default, role_id, role_name, 
       create_time, update_time)
     values (#{id,jdbcType=INTEGER}, #{companyId,jdbcType=INTEGER}, #{openId,jdbcType=VARCHAR}, 
-      #{isDefault,jdbcType=TINYINT}, #{roleId,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+      #{isDefault,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, #{roleName,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.vp.entity.UserCompany" >
     insert into user_company
@@ -51,13 +62,7 @@
         role_id,
       </if>
       <if test="roleName != null" >
-        role_name,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-      <if test="updateTime != null" >
-        update_time,
+        role_name
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -71,19 +76,13 @@
         #{openId,jdbcType=VARCHAR},
       </if>
       <if test="isDefault != null" >
-        #{isDefault,jdbcType=TINYINT},
+        #{isDefault,jdbcType=INTEGER},
       </if>
       <if test="roleId != null" >
         #{roleId,jdbcType=INTEGER},
       </if>
       <if test="roleName != null" >
-        #{roleName,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
+        #{roleName,jdbcType=VARCHAR}
       </if>
     </trim>
   </insert>
@@ -97,19 +96,13 @@
         open_id = #{openId,jdbcType=VARCHAR},
       </if>
       <if test="isDefault != null" >
-        is_default = #{isDefault,jdbcType=TINYINT},
+        is_default = #{isDefault,jdbcType=INTEGER},
       </if>
       <if test="roleId != null" >
         role_id = #{roleId,jdbcType=INTEGER},
       </if>
       <if test="roleName != null" >
-        role_name = #{roleName,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        role_name = #{roleName,jdbcType=VARCHAR}
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -118,11 +111,9 @@
     update user_company
     set company_id = #{companyId,jdbcType=INTEGER},
       open_id = #{openId,jdbcType=VARCHAR},
-      is_default = #{isDefault,jdbcType=TINYINT},
+      is_default = #{isDefault,jdbcType=INTEGER},
       role_id = #{roleId,jdbcType=INTEGER},
-      role_name = #{roleName,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      role_name = #{roleName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

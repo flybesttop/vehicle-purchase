@@ -1,6 +1,8 @@
 package com.vp.rest;
 
 import com.vp.service.FileService;
+import com.vp.util.BaseResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +18,7 @@ import java.util.Map;
  * @author flybesttop
  * @date 2020/12/1
  */
+@Slf4j
 @RestController
 @RequestMapping("file")
 public class FileController {
@@ -23,9 +26,9 @@ public class FileController {
     public FileService fileService;
 
     @RequestMapping("uploadImage")
-    public Map<String, Object> uploadImage(@RequestParam("file") MultipartFile file) {
+    public BaseResponse<Map<String,Object>> uploadImage(@RequestParam("file") MultipartFile file) {
         Map<String, Object> data = new HashMap<>();
         fileService.uploadMultipartFileImage(data, file);
-        return data;
+        return new BaseResponse<>(data);
     }
 }

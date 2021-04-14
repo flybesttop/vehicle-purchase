@@ -28,11 +28,50 @@
     from company
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="getDefaultCompanyInfo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+      c.id,
+      c.company_name,
+      c.avatar_url,
+      c.company_phone,
+      c.province,
+      c.city,
+      c.area,
+      c.post_code,
+      c.introduction,
+      c.creator_open_id,
+      c.creator_phone,
+      c.creator_name,
+      c.status,
+      c.create_time,
+      c.update_time
+    from company c
+    left join user_company uc on uc.company_id=c.id
+    where open_id=#{openId} and uc.is_default=1
+  </select>
+  <select id="getDefaultCompany" resultType="com.vp.dto.UserCompanyDto" parameterType="java.lang.String" >
+    select
+    c.id as companyId,
+    c.company_name as companyName,
+    c.avatar_url as avatarUrl,
+    c.introduction as introduction,
+    c.create_time as createTime,
+    uc.id as userCompanyId,
+    uc.is_default as isDefault,
+    uc.role_id as roleId,
+    uc.role_name as roleName
+    from
+    user_company uc
+    left join company c on c.id=uc.company_id
+    where uc.open_id=#{openId}
+    and uc.is_default=1
+    and c.status=1
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from company
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.vp.entity.Company" >
+  <insert id="insert" parameterType="com.vp.entity.Company" useGeneratedKeys="true" keyProperty="id">
     insert into company (id, company_name, avatar_url,
       company_phone, province, city,
       area, post_code, introduction, creator_open_id, creator_phone, creator_name)
@@ -129,7 +168,7 @@
       <if test="avatarUrl != null" >
         avatar_url = #{avatarUrl,jdbcType=VARCHAR},
       </if>
-      <if test="phone != null" >
+      <if test="companyPhone != null" >
         company_phone = #{companyPhone,jdbcType=VARCHAR},
       </if>
       <if test="province != null" >
@@ -180,5 +219,24 @@
   </update>
   <select id="selectSameNameCompany" resultType="java.lang.Integer">
     select count(1) from company where company_name = #{companyName} and creator_open_id = #{creatorOpenId} and status = 1
+  </select>
+
+  <select id="getUserCompanies" resultType="com.vp.dto.UserCompanyDto">
+    select
+    c.id as companyId,
+    c.company_name as companyName,
+    c.avatar_url as avatarUrl,
+    c.introduction as introduction,
+    c.create_time as createTime,
+    uc.id as userCompanyId,
+    uc.is_default as isDefault,
+    uc.role_id as roleId,
+    uc.role_name as roleName
+    from
+    user_company uc
+    left join company c on c.id=uc.company_id
+    where uc.open_id=#{openId}
+    and c.status=1
+    and company_name like CONCAT('%',#{searchKey},'%')
   </select>
 </mapper>

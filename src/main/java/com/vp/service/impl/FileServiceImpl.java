@@ -2,6 +2,7 @@ package com.vp.service.impl;
 
 import com.vp.service.FileService;
 import com.zlzkj.core.util.UploadUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,6 +12,7 @@ import java.util.Map;
  * @author flybesttop
  * @date 2020/12/1
  */
+@Slf4j
 @Service
 public class FileServiceImpl implements FileService {
     @Override
