@@ -32,6 +32,12 @@
     from user_company
     where open_id=#{openId} and is_default=1
   </select>
+  <select id="selectUserCompany" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from user_company
+    where open_id=#{openId} and company_id=#{companyId}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from user_company
     where id = #{id,jdbcType=INTEGER}

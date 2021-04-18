@@ -21,4 +21,6 @@ public interface UserCompanyMapper {
     int updateByPrimaryKey(UserCompany record);
 
     Integer getUserDefaultCompany(String openId);
+
+    UserCompany selectUserCompany(@Param("openId") String openId,@Param("companyId") Integer companyId);
 }

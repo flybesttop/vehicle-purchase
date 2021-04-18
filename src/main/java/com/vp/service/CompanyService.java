@@ -2,6 +2,7 @@ package com.vp.service;
 
 import com.vp.entity.Company;
 import com.vp.dto.UserCompanyDto;
+import com.vp.vo.CompanyMemberVo;
 import com.vp.vo.UserCompanyVo;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +41,14 @@ public interface CompanyService {
     List<UserCompanyDto> getUserCompanies(String userOpenId, String searchKey);
 
     /**
+     * 通过邀请码获取公司
+     *
+     * @param invitationCode
+     * @return
+     */
+    List<UserCompanyDto> selectCompanyByInvitationCode(String invitationCode);
+
+    /**
      * 通过用户openId查询用户企业，组织 以及默认
      *
      * @param userOpenId
@@ -63,4 +72,23 @@ public interface CompanyService {
      * @return
      */
     Company getDefaultCompanyInfo(String openId);
+
+    /**
+     * 加入公司
+     *
+     * @param openId
+     * @param roleId
+     * @return
+     */
+    Boolean joinCompany(String openId, Integer roleId);
+
+    /**
+     * 获取公司成员
+     *
+     * @param openId
+     * @param searchKey
+     * @return
+     */
+    List<CompanyMemberVo> getCompanyMembers(String openId, String searchKey);
+
 }

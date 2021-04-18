@@ -25,15 +25,15 @@ import java.util.UUID;
 public class RoleServiceImpl implements RoleService {
 
     @Autowired
-    public RoleMapper roleMapper;
+    private RoleMapper roleMapper;
     @Autowired
-    public UserCompanyMapper userCompanyMapper;
+    private UserCompanyMapper userCompanyMapper;
     @Autowired
-    public NodeMapper nodeMapper;
+    private NodeMapper nodeMapper;
     @Autowired
-    public RoleNodeMappingMapper roleNodeMappingMapper;
+    private RoleNodeMappingMapper roleNodeMappingMapper;
     @Autowired
-    public CompanyMapper companyMapper;
+    private CompanyMapper companyMapper;
 
     @Override
     public Boolean createDefaultRole(String openId, Integer companyId) {

@@ -22,7 +22,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class UserController {
 
     @Autowired
-    public UserService userService;
+    private UserService userService;
 
     @RequestMapping(value = "/loginUser", method = POST)
     public BaseResponse<UserVo> LoginUser(@RequestBody User user) {

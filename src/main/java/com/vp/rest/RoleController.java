@@ -4,6 +4,7 @@ import com.vp.entity.Node;
 import com.vp.entity.Role;
 import com.vp.request.ChangeNodesRequest;
 import com.vp.service.RoleService;
+import com.vp.service.UserCompanyService;
 import com.vp.util.BaseResponse;
 import com.vp.vo.NodeVo;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +29,9 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class RoleController {
 
     @Autowired
-    public RoleService roleService;
+    private RoleService roleService;
+    @Autowired
+    private UserCompanyService userCompanyService;
 
     @RequestMapping(value = "getDefaultCompanyRoles", method = POST)
     public BaseResponse<List<Role>> getDefaultCompanyRoles(String openId, String searchKey) {
@@ -55,9 +58,15 @@ public class RoleController {
     }
 
     @RequestMapping(value = "saveRole", method = POST)
-    public BaseResponse<Boolean> saveRole(@RequestBody Role role){
-        Boolean data=roleService.saveRole(role);
+    public BaseResponse<Boolean> saveRole(@RequestBody Role role) {
+        Boolean data = roleService.saveRole(role);
         return new BaseResponse<>(data);
+    }
+
+    @RequestMapping(value = "changeRole", method = POST)
+    public BaseResponse<Boolean> changeRole(Integer userCompanyId, Integer newRoleId) {
+        Boolean res = userCompanyService.changeUserRole(userCompanyId, newRoleId);
+        return new BaseResponse<>(res);
     }
 
 }

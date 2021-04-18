@@ -23,7 +23,7 @@ import java.util.Map;
 @RequestMapping("file")
 public class FileController {
     @Autowired
-    public FileService fileService;
+    private FileService fileService;
 
     @RequestMapping("uploadImage")
     public BaseResponse<Map<String,Object>> uploadImage(@RequestParam("file") MultipartFile file) {
