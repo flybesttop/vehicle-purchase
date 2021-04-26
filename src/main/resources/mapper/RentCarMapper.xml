@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vp.dao.RentCarMapper" >
+  <resultMap id="BaseResultMap" type="com.vp.entity.RentCar" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="car_id" property="carId" jdbcType="INTEGER" />
+    <result column="rent_people_name" property="rentPeopleName" jdbcType="VARCHAR" />
+    <result column="rent_people_phone" property="rentPeoplePhone" jdbcType="VARCHAR" />
+    <result column="rent_people_idcard" property="rentPeopleIdcard" jdbcType="VARCHAR" />
+    <result column="rent_price" property="rentPrice" jdbcType="DOUBLE" />
+    <result column="rent_time_start" property="rentTimeStart" jdbcType="TIMESTAMP" />
+    <result column="rent_time_end" property="rentTimeEnd" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="operator_id" property="operatorId" jdbcType="VARCHAR" />
+    <result column="operator_name" property="operatorName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, car_id, rent_people_name, rent_people_phone, rent_people_idcard, rent_price, 
+    rent_time_start, rent_time_end, remark, operator_id, operator_name, create_time, 
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from rent_car
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from rent_car
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.vp.entity.RentCar" >
+    insert into rent_car (id, car_id, rent_people_name, 
+      rent_people_phone, rent_people_idcard, rent_price, 
+      rent_time_start, rent_time_end, remark, 
+      operator_id, operator_name, create_time, 
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{carId,jdbcType=INTEGER}, #{rentPeopleName,jdbcType=VARCHAR}, 
+      #{rentPeoplePhone,jdbcType=VARCHAR}, #{rentPeopleIdcard,jdbcType=VARCHAR}, #{rentPrice,jdbcType=DOUBLE}, 
+      #{rentTimeStart,jdbcType=TIMESTAMP}, #{rentTimeEnd,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{operatorId,jdbcType=VARCHAR}, #{operatorName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.vp.entity.RentCar" >
+    insert into rent_car
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="carId != null" >
+        car_id,
+      </if>
+      <if test="rentPeopleName != null" >
+        rent_people_name,
+      </if>
+      <if test="rentPeoplePhone != null" >
+        rent_people_phone,
+      </if>
+      <if test="rentPeopleIdcard != null" >
+        rent_people_idcard,
+      </if>
+      <if test="rentPrice != null" >
+        rent_price,
+      </if>
+      <if test="rentTimeStart != null" >
+        rent_time_start,
+      </if>
+      <if test="rentTimeEnd != null" >
+        rent_time_end,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="operatorId != null" >
+        operator_id,
+      </if>
+      <if test="operatorName != null" >
+        operator_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="carId != null" >
+        #{carId,jdbcType=INTEGER},
+      </if>
+      <if test="rentPeopleName != null" >
+        #{rentPeopleName,jdbcType=VARCHAR},
+      </if>
+      <if test="rentPeoplePhone != null" >
+        #{rentPeoplePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="rentPeopleIdcard != null" >
+        #{rentPeopleIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="rentPrice != null" >
+        #{rentPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="rentTimeStart != null" >
+        #{rentTimeStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rentTimeEnd != null" >
+        #{rentTimeEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null" >
+        #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.vp.entity.RentCar" >
+    update rent_car
+    <set >
+      <if test="carId != null" >
+        car_id = #{carId,jdbcType=INTEGER},
+      </if>
+      <if test="rentPeopleName != null" >
+        rent_people_name = #{rentPeopleName,jdbcType=VARCHAR},
+      </if>
+      <if test="rentPeoplePhone != null" >
+        rent_people_phone = #{rentPeoplePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="rentPeopleIdcard != null" >
+        rent_people_idcard = #{rentPeopleIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="rentPrice != null" >
+        rent_price = #{rentPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="rentTimeStart != null" >
+        rent_time_start = #{rentTimeStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rentTimeEnd != null" >
+        rent_time_end = #{rentTimeEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null" >
+        operator_id = #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null" >
+        operator_name = #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.vp.entity.RentCar" >
+    update rent_car
+    set car_id = #{carId,jdbcType=INTEGER},
+      rent_people_name = #{rentPeopleName,jdbcType=VARCHAR},
+      rent_people_phone = #{rentPeoplePhone,jdbcType=VARCHAR},
+      rent_people_idcard = #{rentPeopleIdcard,jdbcType=VARCHAR},
+      rent_price = #{rentPrice,jdbcType=DOUBLE},
+      rent_time_start = #{rentTimeStart,jdbcType=TIMESTAMP},
+      rent_time_end = #{rentTimeEnd,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      operator_id = #{operatorId,jdbcType=VARCHAR},
+      operator_name = #{operatorName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

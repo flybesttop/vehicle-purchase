@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vp.dao.CarMapper" >
+  <resultMap id="BaseResultMap" type="com.vp.entity.Car" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="car_number" property="carNumber" jdbcType="VARCHAR" />
+    <result column="car_img" property="carImg" jdbcType="VARCHAR" />
+    <result column="car_model" property="carModel" jdbcType="VARCHAR" />
+    <result column="car_color" property="carColor" jdbcType="VARCHAR" />
+    <result column="engine_number" property="engineNumber" jdbcType="VARCHAR" />
+    <result column="vim" property="vim" jdbcType="VARCHAR" />
+    <result column="annual_review_time" property="annualReviewTime" jdbcType="VARCHAR" />
+    <result column="brand" property="brand" jdbcType="VARCHAR" />
+    <result column="first_insurance_purchase_time" property="firstInsurancePurchaseTime" jdbcType="VARCHAR" />
+    <result column="second_guarantee_mileage" property="secondGuaranteeMileage" jdbcType="INTEGER" />
+    <result column="factory_number" property="factoryNumber" jdbcType="VARCHAR" />
+    <result column="owner_name" property="ownerName" jdbcType="VARCHAR" />
+    <result column="owner_phone" property="ownerPhone" jdbcType="VARCHAR" />
+    <result column="seat_number" property="seatNumber" jdbcType="INTEGER" />
+    <result column="purchase_time" property="purchaseTime" jdbcType="VARCHAR" />
+    <result column="purchase_price" property="purchasePrice" jdbcType="DOUBLE" />
+    <result column="purchase_company_id" property="purchaseCompanyId" jdbcType="INTEGER" />
+    <result column="purchase_company_name" property="purchaseCompanyName" jdbcType="VARCHAR" />
+    <result column="purchase_user_id" property="purchaseUserId" jdbcType="VARCHAR" />
+    <result column="purchase_user_name" property="purchaseUserName" jdbcType="VARCHAR" />
+    <result column="purchase_tax" property="purchaseTax" jdbcType="DOUBLE" />
+    <result column="licensing_fee" property="licensingFee" jdbcType="DOUBLE" />
+    <result column="certificate_processing_time" property="certificateProcessingTime" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, car_number, car_img, car_model, car_color, engine_number, vim, annual_review_time, 
+    brand, first_insurance_purchase_time, second_guarantee_mileage, factory_number, owner_name, 
+    owner_phone, seat_number, purchase_time, purchase_price,purchase_company_id,purchase_company_name, purchase_user_id, purchase_user_name,
+    purchase_tax, licensing_fee, certificate_processing_time, remark, status, create_time, 
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from car
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getCarByVim" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from car
+    where vim=#{vim}
+  </select>
+  <select id="getCarByVimOther" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List" />
+    from car
+    where vim=#{vim} and id != #{carId}
+  </select>
+  <select id="getCarList" resultType="com.vp.entity.Car" >
+    select
+      c.id as id,
+      c.car_number as carNumber,
+      c.car_img as carImg,
+      c.car_model as carModel,
+      c.car_color as carColor,
+      c.engine_number as engineNumber,
+      c.vim as vim,
+      c.annual_review_time as aannualReviewTime,
+      c.brand as brand,
+      c.first_insurance_purchase_time as firstInsurancePurchaseTime,
+      c.second_guarantee_mileage as secondGuaranteeMileage,
+      c.factory_number as factoryNumber,
+      c.owner_name as ownerName,
+      c.owner_phone as ownerPhone,
+      c.seat_number as seatNumber,
+      c.purchase_time as purchaseTime,
+      c.purchase_price as purchasePrice,
+      c.purchase_company_id as purchaseCompanyId,
+      c.purchase_company_name as purchaseCompanyName,
+      c.purchase_user_id as purchaseUserId,
+      c.purchase_user_name as purchaseUserName,
+      c.purchase_tax as purchaseTax,
+      c.licensing_fee as licensingFee,
+      c.certificate_processing_time as certificateProcessingTime,
+      c.remark as remark,
+      c.status as status,
+      c.create_time as createTime,
+      c.update_time as updateTime,
+      cs.status_name as statusName,
+      cm.model_name as modelName
+    from car c
+    left join car_status cs on c.status=cs.status_id
+    left join car_model cm on c.car_model=cm.model_id
+    where purchase_company_id = #{companyId} and vim like CONCAT('%',#{searchKey},'%')
+    <if test="carStatus != 0">
+      and status = #{carStatus}
+    </if>
+    order by c.update_time desc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from car
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.vp.entity.Car" >
+    insert into car (id, car_number, car_img, 
+      car_model, car_color, engine_number, 
+      vim, annual_review_time, brand, 
+      first_insurance_purchase_time, second_guarantee_mileage, 
+      factory_number, owner_name, owner_phone, 
+      seat_number, purchase_time, purchase_price, purchase_company_id, purchase_company_name,
+      purchase_user_id, purchase_user_name, purchase_tax, 
+      licensing_fee, certificate_processing_time, 
+      remark, status, create_time, 
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{carNumber,jdbcType=VARCHAR}, #{carImg,jdbcType=VARCHAR}, 
+      #{carModel,jdbcType=VARCHAR}, #{carColor,jdbcType=VARCHAR}, #{engineNumber,jdbcType=VARCHAR}, 
+      #{vim,jdbcType=VARCHAR}, #{annualReviewTime,jdbcType=VARCHAR}, #{brand,jdbcType=VARCHAR},
+      #{firstInsurancePurchaseTime,jdbcType=VARCHAR}, #{secondGuaranteeMileage,jdbcType=INTEGER},
+      #{factoryNumber,jdbcType=VARCHAR}, #{ownerName,jdbcType=VARCHAR}, #{ownerPhone,jdbcType=VARCHAR}, 
+      #{seatNumber,jdbcType=INTEGER}, #{purchaseTime,jdbcType=VARCHAR}, #{purchasePrice,jdbcType=DOUBLE},#{purchaseCompanyId,jdbcType=INTEGER}, #{purchaseCompanyName,jdbcType=VARCHAR},
+      #{purchaseUserId,jdbcType=VARCHAR}, #{purchaseUserName,jdbcType=VARCHAR}, #{purchaseTax,jdbcType=DOUBLE},
+      #{licensingFee,jdbcType=DOUBLE}, #{certificateProcessingTime,jdbcType=VARCHAR},
+      #{remark,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.vp.entity.Car" useGeneratedKeys="true" keyProperty="id">
+    insert into car
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="carNumber != null" >
+        car_number,
+      </if>
+      <if test="carImg != null" >
+        car_img,
+      </if>
+      <if test="carModel != null" >
+        car_model,
+      </if>
+      <if test="carColor != null" >
+        car_color,
+      </if>
+      <if test="engineNumber != null" >
+        engine_number,
+      </if>
+      <if test="vim != null" >
+        vim,
+      </if>
+      <if test="annualReviewTime != null" >
+        annual_review_time,
+      </if>
+      <if test="brand != null" >
+        brand,
+      </if>
+      <if test="firstInsurancePurchaseTime != null" >
+        first_insurance_purchase_time,
+      </if>
+      <if test="secondGuaranteeMileage != null" >
+        second_guarantee_mileage,
+      </if>
+      <if test="factoryNumber != null" >
+        factory_number,
+      </if>
+      <if test="ownerName != null" >
+        owner_name,
+      </if>
+      <if test="ownerPhone != null" >
+        owner_phone,
+      </if>
+      <if test="seatNumber != null" >
+        seat_number,
+      </if>
+      <if test="purchaseTime != null" >
+        purchase_time,
+      </if>
+      <if test="purchasePrice != null" >
+        purchase_price,
+      </if>
+      <if test="purchaseCompanyId != null" >
+        purchase_company_id,
+      </if>
+      <if test="purchaseCompanyName != null" >
+        purchase_company_name,
+      </if>
+      <if test="purchaseUserId != null" >
+        purchase_user_id,
+      </if>
+      <if test="purchaseUserName != null" >
+        purchase_user_name,
+      </if>
+      <if test="purchaseTax != null" >
+        purchase_tax,
+      </if>
+      <if test="licensingFee != null" >
+        licensing_fee,
+      </if>
+      <if test="certificateProcessingTime != null" >
+        certificate_processing_time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="carNumber != null" >
+        #{carNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="carImg != null" >
+        #{carImg,jdbcType=VARCHAR},
+      </if>
+      <if test="carModel != null" >
+        #{carModel,jdbcType=VARCHAR},
+      </if>
+      <if test="carColor != null" >
+        #{carColor,jdbcType=VARCHAR},
+      </if>
+      <if test="engineNumber != null" >
+        #{engineNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="vim != null" >
+        #{vim,jdbcType=VARCHAR},
+      </if>
+      <if test="annualReviewTime != null" >
+        #{annualReviewTime,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="firstInsurancePurchaseTime != null" >
+        #{firstInsurancePurchaseTime,jdbcType=VARCHAR},
+      </if>
+      <if test="secondGuaranteeMileage != null" >
+        #{secondGuaranteeMileage,jdbcType=INTEGER},
+      </if>
+      <if test="factoryNumber != null" >
+        #{factoryNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerName != null" >
+        #{ownerName,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerPhone != null" >
+        #{ownerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="seatNumber != null" >
+        #{seatNumber,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseTime != null" >
+        #{purchaseTime,jdbcType=VARCHAR},
+      </if>
+      <if test="purchasePrice != null" >
+        #{purchasePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="purchaseCompanyId != null" >
+        #{purchaseCompanyId,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseCompanyName != null" >
+        #{purchaseCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseUserId != null" >
+        #{purchaseUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseUserName != null" >
+        #{purchaseUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseTax != null" >
+        #{purchaseTax,jdbcType=DOUBLE},
+      </if>
+      <if test="licensingFee != null" >
+        #{licensingFee,jdbcType=DOUBLE},
+      </if>
+      <if test="certificateProcessingTime != null" >
+        #{certificateProcessingTime,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.vp.entity.Car" >
+    update car
+    <set >
+      <if test="carNumber != null" >
+        car_number = #{carNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="carImg != null" >
+        car_img = #{carImg,jdbcType=VARCHAR},
+      </if>
+      <if test="carModel != null" >
+        car_model = #{carModel,jdbcType=VARCHAR},
+      </if>
+      <if test="carColor != null" >
+        car_color = #{carColor,jdbcType=VARCHAR},
+      </if>
+      <if test="engineNumber != null" >
+        engine_number = #{engineNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="vim != null" >
+        vim = #{vim,jdbcType=VARCHAR},
+      </if>
+      <if test="annualReviewTime != null" >
+        annual_review_time = #{annualReviewTime,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="firstInsurancePurchaseTime != null" >
+        first_insurance_purchase_time = #{firstInsurancePurchaseTime,jdbcType=VARCHAR},
+      </if>
+      <if test="secondGuaranteeMileage != null" >
+        second_guarantee_mileage = #{secondGuaranteeMileage,jdbcType=INTEGER},
+      </if>
+      <if test="factoryNumber != null" >
+        factory_number = #{factoryNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerName != null" >
+        owner_name = #{ownerName,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerPhone != null" >
+        owner_phone = #{ownerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="seatNumber != null" >
+        seat_number = #{seatNumber,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseTime != null" >
+        purchase_time = #{purchaseTime,jdbcType=VARCHAR},
+      </if>
+      <if test="purchasePrice != null" >
+        purchase_price = #{purchasePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="purchaseCompanyId != null" >
+        purchase_company_id = #{purchaseCompanyId,jdbcType=INTEGER},
+      </if>
+      <if test="purchaseCompanyName != null" >
+        purchase_company_name = #{purchaseCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseUserId != null" >
+        purchase_user_id = #{purchaseUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseUserName != null" >
+        purchase_user_name = #{purchaseUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseTax != null" >
+        purchase_tax = #{purchaseTax,jdbcType=DOUBLE},
+      </if>
+      <if test="licensingFee != null" >
+        licensing_fee = #{licensingFee,jdbcType=DOUBLE},
+      </if>
+      <if test="certificateProcessingTime != null" >
+        certificate_processing_time = #{certificateProcessingTime,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.vp.entity.Car" >
+    update car
+    set car_number = #{carNumber,jdbcType=VARCHAR},
+      car_img = #{carImg,jdbcType=VARCHAR},
+      car_model = #{carModel,jdbcType=VARCHAR},
+      car_color = #{carColor,jdbcType=VARCHAR},
+      engine_number = #{engineNumber,jdbcType=VARCHAR},
+      vim = #{vim,jdbcType=VARCHAR},
+      annual_review_time = #{annualReviewTime,jdbcType=VARCHAR},
+      brand = #{brand,jdbcType=VARCHAR},
+      first_insurance_purchase_time = #{firstInsurancePurchaseTime,jdbcType=VARCHAR},
+      second_guarantee_mileage = #{secondGuaranteeMileage,jdbcType=INTEGER},
+      factory_number = #{factoryNumber,jdbcType=VARCHAR},
+      owner_name = #{ownerName,jdbcType=VARCHAR},
+      owner_phone = #{ownerPhone,jdbcType=VARCHAR},
+      seat_number = #{seatNumber,jdbcType=INTEGER},
+      purchase_time = #{purchaseTime,jdbcType=VARCHAR},
+      purchase_price = #{purchasePrice,jdbcType=DOUBLE},
+      purchase_company_id = #{purchaseCompanyId,jdbcType=INTEGER},
+      purchase_company_name = #{purchaseCompanyName,jdbcType=VARCHAR},
+      purchase_user_id = #{purchaseUserId,jdbcType=VARCHAR},
+      purchase_user_name = #{purchaseUserName,jdbcType=VARCHAR},
+      purchase_tax = #{purchaseTax,jdbcType=DOUBLE},
+      licensing_fee = #{licensingFee,jdbcType=DOUBLE},
+      certificate_processing_time = #{certificateProcessingTime,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
