@@ -25,4 +25,6 @@ public interface CarMapper {
     Car getCarByVimOther(@Param("vim") String vim, @Param("carId") Integer carId);
 
     List<Car> getCarList(@Param("companyId") Integer companyId, @Param("searchKey") String searchKey, @Param("carStatus") Integer carStatus);
+
+    List<Car> getAllLeaseExpiredCar();
 }

@@ -56,6 +56,40 @@
     from car
     where vim=#{vim} and id != #{carId}
   </select>
+  <select id="getAllLeaseExpiredCar" resultMap="BaseResultMap"  >
+    select
+      c.id as id,
+      c.car_number as carNumber,
+      c.car_img as carImg,
+      c.car_model as carModel,
+      c.car_color as carColor,
+      c.engine_number as engineNumber,
+      c.vim as vim,
+      c.annual_review_time as aannualReviewTime,
+      c.brand as brand,
+      c.first_insurance_purchase_time as firstInsurancePurchaseTime,
+      c.second_guarantee_mileage as secondGuaranteeMileage,
+      c.factory_number as factoryNumber,
+      c.owner_name as ownerName,
+      c.owner_phone as ownerPhone,
+      c.seat_number as seatNumber,
+      c.purchase_time as purchaseTime,
+      c.purchase_price as purchasePrice,
+      c.purchase_company_id as purchaseCompanyId,
+      c.purchase_company_name as purchaseCompanyName,
+      c.purchase_user_id as purchaseUserId,
+      c.purchase_user_name as purchaseUserName,
+      c.purchase_tax as purchaseTax,
+      c.licensing_fee as licensingFee,
+      c.certificate_processing_time as certificateProcessingTime,
+      c.remark as remark,
+      c.status as status,
+      c.create_time as createTime,
+      c.update_time as updateTime
+    from car c
+    left join rent_car rc on c.id=rc.car_id
+    where c.status = 2 and sysdate() > rc.rent_time_end and rc.status=1
+  </select>
   <select id="getCarList" resultType="com.vp.entity.Car" >
     select
       c.id as id,

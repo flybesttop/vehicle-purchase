@@ -13,6 +13,8 @@ public interface RentCarMapper {
 
     RentCar selectByPrimaryKey(Integer id);
 
+    RentCar getNowRentCar(Integer carId);
+
     int updateByPrimaryKeySelective(RentCar record);
 
     int updateByPrimaryKey(RentCar record);

@@ -4,29 +4,16 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
-public class RentCar implements Serializable {
+public class StopCar implements Serializable {
     private Integer id;
 
     private Integer carId;
 
-    private String rentPeopleName;
-
-    private String rentPeoplePhone;
-
-    private String rentPeopleIdcard;
-
-    private Double rentPrice;
-
-    private LocalDate rentTimeStart;
-
-    private LocalDate rentTimeEnd;
-
-    private String remark;
+    private String stopReason;
 
     private String operatorId;
 
@@ -34,6 +21,7 @@ public class RentCar implements Serializable {
 
     private Integer status;
 
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;

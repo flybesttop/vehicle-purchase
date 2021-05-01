@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vp.dao.SellCarMapper" >
+  <resultMap id="BaseResultMap" type="com.vp.entity.SellCar" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="car_id" property="carId" jdbcType="INTEGER" />
+    <result column="sell_order" property="sellOrder" jdbcType="VARCHAR" />
+    <result column="sell_people_name" property="sellPeopleName" jdbcType="VARCHAR" />
+    <result column="sell_people_phone" property="sellPeoplePhone" jdbcType="VARCHAR" />
+    <result column="sell_people_idcard" property="sellPeopleIdcard" jdbcType="VARCHAR" />
+    <result column="sell_price" property="sellPrice" jdbcType="DOUBLE" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="operator_id" property="operatorId" jdbcType="VARCHAR" />
+    <result column="operator_name" property="operatorName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, car_id, sell_order, sell_people_name, sell_people_phone, sell_people_idcard, 
+    sell_price, remark, operator_id, operator_name, status, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sell_car
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getNowSellCar" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from sell_car
+    where car_id = #{carId,jdbcType=INTEGER} and status = 1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sell_car
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.vp.entity.SellCar" >
+    insert into sell_car (id, car_id, sell_order, 
+      sell_people_name, sell_people_phone, sell_people_idcard, 
+      sell_price, remark, operator_id, 
+      operator_name, status, create_time, 
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{carId,jdbcType=INTEGER}, #{sellOrder,jdbcType=VARCHAR}, 
+      #{sellPeopleName,jdbcType=VARCHAR}, #{sellPeoplePhone,jdbcType=VARCHAR}, #{sellPeopleIdcard,jdbcType=VARCHAR}, 
+      #{sellPrice,jdbcType=DOUBLE}, #{remark,jdbcType=VARCHAR}, #{operatorId,jdbcType=VARCHAR}, 
+      #{operatorName,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.vp.entity.SellCar" >
+    insert into sell_car
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="carId != null" >
+        car_id,
+      </if>
+      <if test="sellOrder != null" >
+        sell_order,
+      </if>
+      <if test="sellPeopleName != null" >
+        sell_people_name,
+      </if>
+      <if test="sellPeoplePhone != null" >
+        sell_people_phone,
+      </if>
+      <if test="sellPeopleIdcard != null" >
+        sell_people_idcard,
+      </if>
+      <if test="sellPrice != null" >
+        sell_price,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="operatorId != null" >
+        operator_id,
+      </if>
+      <if test="operatorName != null" >
+        operator_name,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="carId != null" >
+        #{carId,jdbcType=INTEGER},
+      </if>
+      <if test="sellOrder != null" >
+        #{sellOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="sellPeopleName != null" >
+        #{sellPeopleName,jdbcType=VARCHAR},
+      </if>
+      <if test="sellPeoplePhone != null" >
+        #{sellPeoplePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="sellPeopleIdcard != null" >
+        #{sellPeopleIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="sellPrice != null" >
+        #{sellPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null" >
+        #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.vp.entity.SellCar" >
+    update sell_car
+    <set >
+      <if test="carId != null" >
+        car_id = #{carId,jdbcType=INTEGER},
+      </if>
+      <if test="sellOrder != null" >
+        sell_order = #{sellOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="sellPeopleName != null" >
+        sell_people_name = #{sellPeopleName,jdbcType=VARCHAR},
+      </if>
+      <if test="sellPeoplePhone != null" >
+        sell_people_phone = #{sellPeoplePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="sellPeopleIdcard != null" >
+        sell_people_idcard = #{sellPeopleIdcard,jdbcType=VARCHAR},
+      </if>
+      <if test="sellPrice != null" >
+        sell_price = #{sellPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null" >
+        operator_id = #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null" >
+        operator_name = #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.vp.entity.SellCar" >
+    update sell_car
+    set car_id = #{carId,jdbcType=INTEGER},
+      sell_order = #{sellOrder,jdbcType=VARCHAR},
+      sell_people_name = #{sellPeopleName,jdbcType=VARCHAR},
+      sell_people_phone = #{sellPeoplePhone,jdbcType=VARCHAR},
+      sell_people_idcard = #{sellPeopleIdcard,jdbcType=VARCHAR},
+      sell_price = #{sellPrice,jdbcType=DOUBLE},
+      remark = #{remark,jdbcType=VARCHAR},
+      operator_id = #{operatorId,jdbcType=VARCHAR},
+      operator_name = #{operatorName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

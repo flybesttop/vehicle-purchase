@@ -1,9 +1,8 @@
 package com.vp.service;
 
-import com.vp.entity.Car;
-import com.vp.entity.CarLog;
-import com.vp.entity.RentCar;
+import com.vp.entity.*;
 import com.vp.request.RentCarReq;
+import com.vp.vo.CarVo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +14,7 @@ import java.util.List;
  * @date 2021-04-18
  */
 @Service
-public interface CarService {
+public interface CarService<T> {
     /**
      * 创建车辆
      *
@@ -49,6 +48,14 @@ public interface CarService {
     Car getCarById(Integer carId);
 
     /**
+     * 获取车辆信息
+     *
+     * @param carId
+     * @return
+     */
+    CarVo<?> getCarVoById(Integer carId);
+
+    /**
      * 获取所有车辆
      *
      * @param userId
@@ -56,7 +63,7 @@ public interface CarService {
      * @param carStatus
      * @return
      */
-    List<Car> getCarList(String userId, String searchKey, Integer carStatus);
+    List<CarVo<?>> getCarList(String userId, String searchKey, Integer carStatus);
 
     /**
      * 或者车辆日志
@@ -72,9 +79,10 @@ public interface CarService {
      * @param userOpenId
      * @param carId
      * @param carStatus
+     * @param message
      * @return
      */
-    Boolean changeCarStatus(String userOpenId, Integer carId, Integer carStatus);
+    Boolean changeCarStatus(String userOpenId, Integer carId, Integer carStatus, String message);
 
     /**
      * 租赁车辆
@@ -83,4 +91,62 @@ public interface CarService {
      * @return
      */
     Boolean rentCar(RentCarReq rentCar);
+
+    /**
+     * 更新租赁车辆信息
+     *
+     * @param rentCar
+     * @return
+     */
+    Boolean updateRentCar(RentCar rentCar);
+
+    /**
+     * 停用车辆
+     *
+     * @param remark
+     * @param carId
+     * @param openId
+     * @return
+     */
+    Boolean stopCar(String remark, Integer carId, String openId, String username);
+
+    /**
+     * 更新停用车辆信息
+     *
+     * @param stopCar
+     * @return
+     */
+    Boolean updateStopCar(StopCar stopCar);
+
+    /**
+     * 维修车辆
+     *
+     * @param repairCar
+     * @return
+     */
+    Boolean repairCar(RepairCar repairCar);
+
+    /**
+     * 更新维修车辆信息
+     *
+     * @param repairCar
+     * @return
+     */
+    Boolean updateRepairCar(RepairCar repairCar);
+
+    /**
+     * 出售车辆
+     *
+     * @param sellCar
+     * @return
+     */
+    Boolean sellCar(SellCar sellCar);
+
+    /**
+     * 更新出售车辆信息
+     *
+     * @param sellCar
+     * @return
+     */
+    Boolean updateSellCar(SellCar sellCar);
 }

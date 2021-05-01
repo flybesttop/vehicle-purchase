@@ -1,30 +1,28 @@
 package com.vp.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Data
-public class RentCar implements Serializable {
+public class RepairCar implements Serializable {
     private Integer id;
 
     private Integer carId;
 
-    private String rentPeopleName;
+    private String repairOrder;
 
-    private String rentPeoplePhone;
+    private String repairCompanyPhone;
 
-    private String rentPeopleIdcard;
+    private String repairCompanyName;
 
-    private Double rentPrice;
+    private Double repairPrice;
 
-    private LocalDate rentTimeStart;
+    private LocalDate repairDateStart;
 
-    private LocalDate rentTimeEnd;
+    private LocalDate repairDateEnd;
 
     private String remark;
 

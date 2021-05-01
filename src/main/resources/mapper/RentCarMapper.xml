@@ -13,12 +13,13 @@
     <result column="remark" property="remark" jdbcType="VARCHAR" />
     <result column="operator_id" property="operatorId" jdbcType="VARCHAR" />
     <result column="operator_name" property="operatorName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, car_id, rent_people_name, rent_people_phone, rent_people_idcard, rent_price, 
-    rent_time_start, rent_time_end, remark, operator_id, operator_name, create_time, 
+    rent_time_start, rent_time_end, remark, operator_id, operator_name, status, create_time,
     update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -26,6 +27,12 @@
     <include refid="Base_Column_List" />
     from rent_car
     where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getNowRentCar" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from rent_car
+    where car_id = #{carId,jdbcType=INTEGER} and status=1
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from rent_car
@@ -35,12 +42,12 @@
     insert into rent_car (id, car_id, rent_people_name, 
       rent_people_phone, rent_people_idcard, rent_price, 
       rent_time_start, rent_time_end, remark, 
-      operator_id, operator_name, create_time, 
+      operator_id, operator_name, status, create_time,
       update_time)
     values (#{id,jdbcType=INTEGER}, #{carId,jdbcType=INTEGER}, #{rentPeopleName,jdbcType=VARCHAR}, 
       #{rentPeoplePhone,jdbcType=VARCHAR}, #{rentPeopleIdcard,jdbcType=VARCHAR}, #{rentPrice,jdbcType=DOUBLE}, 
       #{rentTimeStart,jdbcType=TIMESTAMP}, #{rentTimeEnd,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
-      #{operatorId,jdbcType=VARCHAR}, #{operatorName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{operatorId,jdbcType=VARCHAR}, #{operatorName,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP},
       #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.vp.entity.RentCar" >
@@ -78,6 +85,9 @@
       </if>
       <if test="operatorName != null" >
         operator_name,
+      </if>
+      <if test="status != null" >
+        status,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -120,6 +130,9 @@
       <if test="operatorName != null" >
         #{operatorName,jdbcType=VARCHAR},
       </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -161,6 +174,9 @@
       <if test="operatorName != null" >
         operator_name = #{operatorName,jdbcType=VARCHAR},
       </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
@@ -182,6 +198,7 @@
       remark = #{remark,jdbcType=VARCHAR},
       operator_id = #{operatorId,jdbcType=VARCHAR},
       operator_name = #{operatorName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}

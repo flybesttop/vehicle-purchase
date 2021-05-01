@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vp.dao.RepairCarMapper" >
+  <resultMap id="BaseResultMap" type="com.vp.entity.RepairCar" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="car_id" property="carId" jdbcType="INTEGER" />
+    <result column="repair_order" property="repairOrder" jdbcType="VARCHAR" />
+    <result column="repair_company_phone" property="repairCompanyPhone" jdbcType="VARCHAR" />
+    <result column="repair_company_name" property="repairCompanyName" jdbcType="VARCHAR" />
+    <result column="repair_price" property="repairPrice" jdbcType="DOUBLE" />
+    <result column="repair_date_start" property="repairDateStart" jdbcType="TIMESTAMP" />
+    <result column="repair_date_end" property="repairDateEnd" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="operator_id" property="operatorId" jdbcType="VARCHAR" />
+    <result column="operator_name" property="operatorName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, car_id, repair_order, repair_company_phone, repair_company_name, repair_price, 
+    repair_date_start, repair_date_end, remark, operator_id, operator_name, status, create_time, 
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from repair_car
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="getNowRepairCar" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from repair_car
+    where car_id = #{carId,jdbcType=INTEGER} and status = 1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from repair_car
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.vp.entity.RepairCar" >
+    insert into repair_car (id, car_id, repair_order, 
+      repair_company_phone, repair_company_name, 
+      repair_price, repair_date_start, repair_date_end, 
+      remark, operator_id, operator_name, 
+      status, create_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{carId,jdbcType=INTEGER}, #{repairOrder,jdbcType=VARCHAR}, 
+      #{repairCompanyPhone,jdbcType=VARCHAR}, #{repairCompanyName,jdbcType=VARCHAR}, 
+      #{repairPrice,jdbcType=DOUBLE}, #{repairDateStart,jdbcType=TIMESTAMP}, #{repairDateEnd,jdbcType=TIMESTAMP}, 
+      #{remark,jdbcType=VARCHAR}, #{operatorId,jdbcType=VARCHAR}, #{operatorName,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.vp.entity.RepairCar" >
+    insert into repair_car
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="carId != null" >
+        car_id,
+      </if>
+      <if test="repairOrder != null" >
+        repair_order,
+      </if>
+      <if test="repairCompanyPhone != null" >
+        repair_company_phone,
+      </if>
+      <if test="repairCompanyName != null" >
+        repair_company_name,
+      </if>
+      <if test="repairPrice != null" >
+        repair_price,
+      </if>
+      <if test="repairDateStart != null" >
+        repair_date_start,
+      </if>
+      <if test="repairDateEnd != null" >
+        repair_date_end,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="operatorId != null" >
+        operator_id,
+      </if>
+      <if test="operatorName != null" >
+        operator_name,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="carId != null" >
+        #{carId,jdbcType=INTEGER},
+      </if>
+      <if test="repairOrder != null" >
+        #{repairOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="repairCompanyPhone != null" >
+        #{repairCompanyPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="repairCompanyName != null" >
+        #{repairCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="repairPrice != null" >
+        #{repairPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="repairDateStart != null" >
+        #{repairDateStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="repairDateEnd != null" >
+        #{repairDateEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null" >
+        #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.vp.entity.RepairCar" >
+    update repair_car
+    <set >
+      <if test="carId != null" >
+        car_id = #{carId,jdbcType=INTEGER},
+      </if>
+      <if test="repairOrder != null" >
+        repair_order = #{repairOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="repairCompanyPhone != null" >
+        repair_company_phone = #{repairCompanyPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="repairCompanyName != null" >
+        repair_company_name = #{repairCompanyName,jdbcType=VARCHAR},
+      </if>
+      <if test="repairPrice != null" >
+        repair_price = #{repairPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="repairDateStart != null" >
+        repair_date_start = #{repairDateStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="repairDateEnd != null" >
+        repair_date_end = #{repairDateEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null" >
+        operator_id = #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null" >
+        operator_name = #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.vp.entity.RepairCar" >
+    update repair_car
+    set car_id = #{carId,jdbcType=INTEGER},
+      repair_order = #{repairOrder,jdbcType=VARCHAR},
+      repair_company_phone = #{repairCompanyPhone,jdbcType=VARCHAR},
+      repair_company_name = #{repairCompanyName,jdbcType=VARCHAR},
+      repair_price = #{repairPrice,jdbcType=DOUBLE},
+      repair_date_start = #{repairDateStart,jdbcType=TIMESTAMP},
+      repair_date_end = #{repairDateEnd,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      operator_id = #{operatorId,jdbcType=VARCHAR},
+      operator_name = #{operatorName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
