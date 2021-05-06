@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vp.dao.DailyCheckInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.vp.entity.DailyCheckInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="daily_check_id" property="dailyCheckId" jdbcType="INTEGER" />
+    <result column="company_id" property="companyId" jdbcType="INTEGER" />
+    <result column="car_id" property="carId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="operator_id" property="operatorId" jdbcType="VARCHAR" />
+    <result column="operator_name" property="operatorName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, daily_check_id, company_id, car_id, status, remark, operator_id, operator_name, 
+    create_time, update_time
+  </sql>
+
+  <select id="countNowCars" resultType="java.lang.Integer">
+    select
+        count(1)
+    from daily_check_info dci left join car c on dci.car_id=c.id
+    where dci.daily_check_id=#{dailyCheckId} and c.status in (1,4)
+  </select>
+  <select id="countRentCars" resultType="java.lang.Integer">
+    select
+        count(1)
+    from daily_check_info dci left join car c on dci.car_id=c.id
+    where dci.daily_check_id=#{dailyCheckId} and c.status in (2,3)
+  </select>
+  <select id="countOtherCars" resultType="java.lang.Integer">
+    select
+        count(1)
+    from daily_check_info dci left join car c on dci.car_id=c.id
+    where dci.daily_check_id=#{dailyCheckId} and c.status in (5,6)
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from daily_check_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="checkFinishAllDailyCheck" resultType="java.lang.Integer" parameterType="java.lang.Integer" >
+    select
+      count(1)
+    from daily_check_info
+    where daily_check_id = #{dailyCheckId,jdbcType=INTEGER} and status != 1
+  </select>
+
+  <select id="getDailyCheckInfoVos" resultType="com.vp.vo.DailyCheckInfoVo">
+    select
+        c.id as carId,
+        c.brand as carBrand,
+        c.car_number as carNumber,
+        c.car_img as carImg,
+        c.car_color as carColor,
+        c.car_model as carModel,
+        c.engine_number as engineNumber,
+        c.vim as vim,
+        cs.status_name as carStatus,
+        dci.id as dailyCheckInfoId,
+        dci.status as dailyCheckInfoStatus,
+        dci.remark as dailyCheckRemark
+    from daily_check_info dci
+    left join car c on dci.car_id = c.id
+    left join car_status cs on cs.status_id = c.status
+    where dci.daily_check_id = #{dailyCheckId}
+    <if test="dailyCheckCarStatus == 1">
+      and c.status in (1,4)
+    </if>
+    <if test="dailyCheckCarStatus == 2">
+      and c.status in (2,3)
+    </if>
+    <if test="dailyCheckCarStatus == 3">
+      and c.status in (5,6)
+    </if>
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from daily_check_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.vp.entity.DailyCheckInfo" >
+    insert into daily_check_info (id, daily_check_id, company_id, 
+      car_id, status, remark, 
+      operator_id, operator_name, create_time, 
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{dailyCheckId,jdbcType=INTEGER}, #{companyId,jdbcType=INTEGER}, 
+      #{carId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
+      #{operatorId,jdbcType=VARCHAR}, #{operatorName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.vp.entity.DailyCheckInfo" >
+    insert into daily_check_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="dailyCheckId != null" >
+        daily_check_id,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="carId != null" >
+        car_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="operatorId != null" >
+        operator_id,
+      </if>
+      <if test="operatorName != null" >
+        operator_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="dailyCheckId != null" >
+        #{dailyCheckId,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="carId != null" >
+        #{carId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null" >
+        #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null" >
+        #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.vp.entity.DailyCheckInfo" >
+    update daily_check_info
+    <set >
+      <if test="dailyCheckId != null" >
+        daily_check_id = #{dailyCheckId,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="carId != null" >
+        car_id = #{carId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorId != null" >
+        operator_id = #{operatorId,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null" >
+        operator_name = #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="passDailyCheckInfo" parameterType="java.lang.Integer" >
+    update daily_check_info
+    set status = 1,
+      remark = ''
+    where id = #{dailyCheckInfoId,jdbcType=INTEGER}
+  </update>
+  <update id="reportDailyCheckInfo" >
+    update daily_check_info
+    set status = 2,
+      remark = #{remark}
+    where id = #{dailyCheckInfoId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.vp.entity.DailyCheckInfo" >
+    update daily_check_info
+    set daily_check_id = #{dailyCheckId,jdbcType=INTEGER},
+      company_id = #{companyId,jdbcType=INTEGER},
+      car_id = #{carId,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      operator_id = #{operatorId,jdbcType=VARCHAR},
+      operator_name = #{operatorName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

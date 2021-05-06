@@ -191,7 +191,7 @@ public class CarServiceImpl<T> implements CarService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Boolean changeCarStatus(String userOpenId, Integer carId, Integer carStatus, String message) {
         try {
             changeCarOldStatus(carId);
