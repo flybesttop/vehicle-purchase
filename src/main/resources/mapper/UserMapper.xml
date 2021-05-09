@@ -20,6 +20,12 @@
     from user
     where open_id = #{openId,jdbcType=VARCHAR}
   </select>
+  <select id="getDailyCheckUserOpenId" resultType="java.lang.String" parameterType="java.lang.Integer" >
+    select
+      uc.open_id
+    from user_company uc left join role_node_mapping rnm on rnm.role_id = uc.role_id
+    where rnm.node_id = 7 and uc.company_id = #{companyId}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from user
     where open_id = #{openId,jdbcType=VARCHAR}

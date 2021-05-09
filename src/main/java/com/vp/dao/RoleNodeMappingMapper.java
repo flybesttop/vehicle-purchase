@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 public interface RoleNodeMappingMapper {
     int deleteByPrimaryKey(Integer id);
 
+    int deleteRole(Integer roleId);
+
     int insert(RoleNodeMapping record);
 
     int insertSelective(RoleNodeMapping record);

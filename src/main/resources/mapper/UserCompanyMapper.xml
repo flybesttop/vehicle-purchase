@@ -42,6 +42,10 @@
     delete from user_company
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteRole" parameterType="java.lang.Integer" >
+    delete from user_company
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="com.vp.entity.UserCompany" >
     insert into user_company (id, company_id, open_id, 
       is_default, role_id, role_name, 

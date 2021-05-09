@@ -2,7 +2,6 @@ package com.vp.rest.task;
 
 import com.vp.dao.CarLogMapper;
 import com.vp.dao.CarMapper;
-import com.vp.dao.RentCarMapper;
 import com.vp.entity.Car;
 import com.vp.entity.CarLog;
 import lombok.extern.slf4j.Slf4j;

@@ -54,6 +54,14 @@ public interface RoleService {
     List<Role> getDefaultCompanyRoles(String openId, String searchKey);
 
     /**
+     * 获取邀请码
+     *
+     * @param roleId
+     * @return
+     */
+    String getInvitationCode(Integer roleId, String openId);
+
+    /**
      * 获取所有节点
      *
      * @return
@@ -78,9 +86,16 @@ public interface RoleService {
     Boolean saveRoleNodes(List<String> nodeIds, Integer chooseRoleId);
 
     /**
-     * 保存客户
+     * 保存角色
      * @param role
      * @return
      */
     Boolean saveRole(Role role);
+
+    /**
+     * 删除角色
+     * @param roleId
+     * @return
+     */
+    Boolean deleteRole(Integer roleId);
 }

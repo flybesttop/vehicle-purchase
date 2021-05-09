@@ -1,7 +1,9 @@
 package com.vp.service.impl;
 
+import com.vp.dao.CompanyMapper;
 import com.vp.dao.NodeMapper;
 import com.vp.dao.UserMapper;
+import com.vp.entity.Company;
 import com.vp.entity.Node;
 import com.vp.entity.User;
 import com.vp.service.UserService;
@@ -24,6 +26,8 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
     @Autowired
     private NodeMapper nodeMapper;
+    @Autowired
+    private CompanyMapper companyMapper;
 
     @Override
     public UserVo LoginUser(User user) {
@@ -35,7 +39,7 @@ public class UserServiceImpl implements UserService {
         } else {
             userVo.setUser(checkUser);
         }
-        List<Node> nodes=nodeMapper.getUserDefaultCompanyRoleNodes(user.getOpenId());
+        List<Node> nodes = nodeMapper.getUserDefaultCompanyRoleNodes(user.getOpenId());
         userVo.setNodes(nodes);
         return userVo;
     }
@@ -44,5 +48,11 @@ public class UserServiceImpl implements UserService {
     public boolean updateUser(User user) {
         int result = userMapper.updateByPrimaryKeySelective(user);
         return result != 0;
+    }
+
+    @Override
+    public List<String> getDailyCheckUserOpenId(String openId) {
+        Company company = companyMapper.getDefaultCompanyInfo(openId);
+        return userMapper.getDailyCheckUserOpenId(company.getId());
     }
 }

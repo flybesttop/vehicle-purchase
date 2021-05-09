@@ -25,7 +25,6 @@ import java.util.Map;
 @Slf4j
 @Component
 public class RequestLogAop {
-//    private Logger log = LoggerFactory.getLogger(getClass());
 
     @Pointcut("@annotation(org.springframework.web.bind.annotation.RequestMapping)")
     public void performance() {

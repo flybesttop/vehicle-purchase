@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
@@ -39,6 +40,12 @@ public class RoleController {
         return new BaseResponse<>(roles);
     }
 
+    @RequestMapping(value = "getInvitationCode", method = POST)
+    public BaseResponse<String> getInvitationCode(Integer roleId, String openId) {
+        String invitationCode = roleService.getInvitationCode(roleId, openId);
+        return new BaseResponse<>(invitationCode);
+    }
+
     @RequestMapping(value = "getAllNodes", method = POST)
     public BaseResponse<NodeVo> getAllNodes() {
         NodeVo nodeVo = roleService.getAllNodes();
@@ -60,6 +67,12 @@ public class RoleController {
     @RequestMapping(value = "saveRole", method = POST)
     public BaseResponse<Boolean> saveRole(@RequestBody Role role) {
         Boolean data = roleService.saveRole(role);
+        return new BaseResponse<>(data);
+    }
+
+    @RequestMapping(value = "deleteRole", method = GET)
+    public BaseResponse<Boolean> deleteRole(Integer roleId) {
+        Boolean data = roleService.deleteRole(roleId);
         return new BaseResponse<>(data);
     }
 

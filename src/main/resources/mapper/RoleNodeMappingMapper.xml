@@ -22,6 +22,10 @@
     delete from role_node_mapping
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteRole" parameterType="java.lang.Integer" >
+    delete from role_node_mapping
+    where role_id = #{roleId,jdbcType=INTEGER}
+  </delete>
   <delete id="deleteRoleNode">
     delete from role_node_mapping
     where role_id=#{roleId} and node_id=#{nodeId}

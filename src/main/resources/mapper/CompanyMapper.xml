@@ -266,7 +266,8 @@
     from
     role r
     left join company c on c.id=r.company_id
-    where r.`describe`=#{invitationCode}
+    left join role_invitation_code rc on rc.role_id=r.id
+    where rc.effective_time > (UNIX_TIMESTAMP( now() )-UNIX_TIMESTAMP(rc.create_time)) and rc.code=#{invitationCode}
     and c.status=1
   </select>
 </mapper>

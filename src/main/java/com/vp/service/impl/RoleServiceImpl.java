@@ -34,6 +34,10 @@ public class RoleServiceImpl implements RoleService {
     private RoleNodeMappingMapper roleNodeMappingMapper;
     @Autowired
     private CompanyMapper companyMapper;
+    @Autowired
+    private RoleInvitationCodeMapper roleInvitationCodeMapper;
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public Boolean createDefaultRole(String openId, Integer companyId) {
@@ -88,6 +92,20 @@ public class RoleServiceImpl implements RoleService {
         UserCompany userCompany = userCompanyMapper.selectUserDefaultCompany(openId);
         List<Role> roles = roleMapper.getCompanyRoles(userCompany.getCompanyId(), searchKey);
         return roles;
+    }
+
+    @Override
+    public String getInvitationCode(Integer roleId, String openId) {
+        RoleInvitationCode roleInvitationCode=new RoleInvitationCode();
+        String code=UUID.randomUUID().toString().replace("-","");
+        roleInvitationCode.setCode(code);
+        User user=userMapper.selectByPrimaryKey(openId);
+        roleInvitationCode.setEffectiveTime(7200);
+        roleInvitationCode.setOperatorId(openId);
+        roleInvitationCode.setOperatorName(user.getUsername());
+        roleInvitationCode.setRoleId(roleId);
+        roleInvitationCodeMapper.insertSelective(roleInvitationCode);
+        return code;
     }
 
     @Override
@@ -169,6 +187,19 @@ public class RoleServiceImpl implements RoleService {
             } else {
                 roleMapper.updateByPrimaryKeySelective(role);
             }
+            return true;
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean deleteRole(Integer roleId) {
+        try {
+            roleMapper.deleteByPrimaryKey(roleId);
+            roleNodeMappingMapper.deleteRole(roleId);
+            userCompanyMapper.deleteRole(roleId);
             return true;
         } catch (Exception e) {
             log.error(e.getMessage());

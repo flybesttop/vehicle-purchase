@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 public interface UserCompanyMapper {
     int deleteByPrimaryKey(Integer id);
 
+    int deleteRole(Integer roleId);
+
     int insert(UserCompany record);
 
     int insertSelective(UserCompany record);

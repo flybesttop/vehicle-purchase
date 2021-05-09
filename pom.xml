@@ -29,6 +29,15 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <!-- websocket -->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <exclusions>
                 <!-- 去除旧log依赖 -->
@@ -132,6 +141,12 @@
             <artifactId>amqp-client</artifactId>
             <version>5.10.0</version>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.1</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 
@@ -156,8 +171,10 @@
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
+                <includes>
+                    <include>**/*.*</include>
+                </includes>
                 <excludes>
-                    <exclude>static/**/*</exclude>
                     <exclude>**/*.woff</exclude>
                     <exclude>**/*.woff2</exclude>
                     <exclude>**/*.ttf</exclude>
